@@ -1,7 +1,9 @@
+let cart =[];
 const c = (el)=>{
     return document.querySelector(el)
 }
 const cs=(el)=>document.querySelectorAll(el)
+let count=1;
 pizzaJson.map((item,index)=>{
     
     let pizzaItem = c('.models .pizza-item').cloneNode(true);
@@ -13,28 +15,16 @@ pizzaJson.map((item,index)=>{
     pizzaItem.querySelector('a').addEventListener('click',(e)=>{
         e.preventDefault()
 
-        let count=1;
+        c('.pizzaInfo--qt').innerHTML= count
         let key= e.target.closest('.pizza-item').getAttribute('data-key')
-        
+       
         c('.pizzaWindowArea').style.opacity= 0;
         c('.pizzaWindowArea').style.display= 'flex'
         setTimeout(()=>{
             c('.pizzaWindowArea').style.opacity=1;
         },200)
 
-        c('.pizzaInfo--qtmais').addEventListener('click',function(){
-            count++
-
-            c('.pizzaInfo--qt').innerHTML= count
-                
-          })
-          c('.pizzaInfo--qtmenos').addEventListener('click',function(){
-            count--
-            if(count==0){
-                count =1
-            }  
-            c('.pizzaInfo--qt').innerHTML= count;
-          })
+       
        
         c('.pizzaWindowArea img').src=pizzaJson[key].img;
         c('.pizzaWindowArea h1').innerHTML = pizzaJson[key].name;
@@ -53,13 +43,31 @@ pizzaJson.map((item,index)=>{
          
            
     })
-
-    c('.pizzaInfo--cancelButton').addEventListener('click',()=>{ 
-        count=1
-        c('.pizzaInfo--qt').innerHTML= count
-        c('.pizzaWindowArea').style.display='none'   
-
-    })
-
     c('.pizza-area').appendChild(pizzaItem)
 })
+function exitModal(){
+        
+        c('.pizzaWindowArea').style.display='none'
+}
+cs('.pizzaInfo--cancelButton,.pizzaInfo--cancelMobileButton').forEach((element)=>{
+    element.addEventListener('click',exitModal)
+})
+c('.pizzaInfo--qtmais').addEventListener('click',function(){
+    count++
+
+    c('.pizzaInfo--qt').innerHTML= count
+        
+  })
+c('.pizzaInfo--qtmenos').addEventListener('click',function(){
+    if(count>1){
+        count--
+    }  
+    c('.pizzaInfo--qt').innerHTML= count;
+  })
+cs('.pizzaInfo--size').forEach((item)=>{
+    item.addEventListener('click',()=>{
+    c('.pizzaInfo--size.selected').classList.remove('selected');
+    item.classList.add('selected')
+})
+  })
+ 
