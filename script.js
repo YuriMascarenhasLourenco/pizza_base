@@ -10,7 +10,7 @@ pizzaJson.map((item,index)=>{
     let pizzaItem = c('.models .pizza-item').cloneNode(true);
     pizzaItem.setAttribute('data-key',index)
     pizzaItem.querySelector('.pizza-item--img img ').src=item.img
-    pizzaItem.querySelector('.pizza-item--price').innerHTML=`R$ ${item.price.toFixed(2)}`
+    pizzaItem.querySelector('.pizza-item--price').innerHTML=`R$ ${item.price[2].toFixed(2)}`
     pizzaItem.querySelector('.pizza-item--name').innerHTML= item.name
     pizzaItem.querySelector('.pizza-item--desc').innerHTML=item.description
     pizzaItem.querySelector('a').addEventListener('click',(e)=>{
@@ -30,7 +30,7 @@ let price
         c('.pizzaWindowArea img').src=pizzaJson[key].img;
         c('.pizzaWindowArea h1').innerHTML = pizzaJson[key].name;
         c('.pizzaWindowArea .pizzaInfo--desc').innerHTML=pizzaJson[key].description;
-        c('.pizzaWindowArea .pizzaInfo--actualPrice').innerHTML= `${pizzaJson[key].price[0]}`;
+        c('.pizzaWindowArea .pizzaInfo--actualPrice').innerHTML= `${pizzaJson[key].price[0].toFixed(2)}`;
        
 
 
