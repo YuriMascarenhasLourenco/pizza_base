@@ -4,6 +4,7 @@ const c = (el)=>{
 }
 const cs=(el)=>document.querySelectorAll(el)
 let count=1;
+let modalKey=0;
 pizzaJson.map((item,index)=>{
     
     let pizzaItem = c('.models .pizza-item').cloneNode(true);
@@ -17,7 +18,7 @@ pizzaJson.map((item,index)=>{
 
         c('.pizzaInfo--qt').innerHTML= count
         let key= e.target.closest('.pizza-item').getAttribute('data-key')
-       
+        modalKey=key
         c('.pizzaWindowArea').style.opacity= 0;
         c('.pizzaWindowArea').style.display= 'flex'
         setTimeout(()=>{
@@ -45,18 +46,17 @@ pizzaJson.map((item,index)=>{
     })
     c('.pizza-area').appendChild(pizzaItem)
 })
+
 function exitModal(){
-        
         c('.pizzaWindowArea').style.display='none'
 }
+
 cs('.pizzaInfo--cancelButton,.pizzaInfo--cancelMobileButton').forEach((element)=>{
     element.addEventListener('click',exitModal)
 })
 c('.pizzaInfo--qtmais').addEventListener('click',function(){
     count++
-
-    c('.pizzaInfo--qt').innerHTML= count
-        
+    c('.pizzaInfo--qt').innerHTML= count    
   })
 c('.pizzaInfo--qtmenos').addEventListener('click',function(){
     if(count>1){
@@ -68,6 +68,23 @@ cs('.pizzaInfo--size').forEach((item)=>{
     item.addEventListener('click',()=>{
     c('.pizzaInfo--size.selected').classList.remove('selected');
     item.classList.add('selected')
+    c('.pizzaInfo--actualPrice').innerHTML=pizzaJson[key].price
 })
   })
- 
+ c('.pizzaInfo--addButton').addEventListener('click',()=>{
+    let size=c('.pizzaInfo--size.selected').getAttribute('data-key')
+    let identifier = pizzaJson[modalKey]+'@'+size
+    let index = cart.findIndex((item)=>item.identifier = identifier)
+    if(index > -1){
+        cart[index].qt+=count
+    }else{
+        cart.push({
+            pizza:modalKey,
+            qt: count,
+            size: size , 
+            identifier:identifier
+            })
+    }
+    console.log(cart)
+    exitModal()
+ })
