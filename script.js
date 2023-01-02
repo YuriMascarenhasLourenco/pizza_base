@@ -24,13 +24,13 @@ pizzaJson.map((item,index)=>{
         setTimeout(()=>{
             c('.pizzaWindowArea').style.opacity=1;
         },200)
-
+let price
        
        
         c('.pizzaWindowArea img').src=pizzaJson[key].img;
         c('.pizzaWindowArea h1').innerHTML = pizzaJson[key].name;
         c('.pizzaWindowArea .pizzaInfo--desc').innerHTML=pizzaJson[key].description;
-        c('.pizzaWindowArea .pizzaInfo--actualPrice').innerHTML= `${(pizzaJson[key].price).toFixed(2)}`;
+        c('.pizzaWindowArea .pizzaInfo--actualPrice').innerHTML= `${pizzaJson[key].price[0]}`;
        
 
 
